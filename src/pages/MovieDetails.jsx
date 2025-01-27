@@ -39,7 +39,26 @@ export const MovieDetails = () => {
           <p className="mt-2">
             <i className="bi bi-star-fill text-warning"></i> {movie.vote_average} | <i className="bi bi-people-fill text-success"></i>{movie.vote_count} reviews
           </p>
-          
+          <table className="table table-bordered w-50 met-2">
+            <tbody>
+              <tr>
+                <th>Runtime</th>
+                <td>{movie.runtime}</td>
+              </tr>
+              <tr>
+                <th>Budget</th>
+                <td>{movie.budget}</td>
+              </tr>
+              <tr>
+                <th>Revenue</th>
+                <td>{movie.revenue}</td>
+              </tr>
+              <tr>
+                <th>Release Date</th>
+                <td>{movie.release_date}</td>
+              </tr>
+            </tbody>
+          </table>
           <a className="btn btn-warning" target="_blank" href={`https://www.imdb.com/title/${movie.imdb_id}/`}>
           View in IMDB</a>
       </div>
