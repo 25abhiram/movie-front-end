@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useFetch = ( apiPath, queryTerm = "" ) => {
+export const useFetch = (apiPath, queryTerm = "") => {
     const [data, setData] = useState([]);
     const key = import.meta.env.VITE_API_KEY;
 

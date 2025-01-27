@@ -4,7 +4,7 @@ import { Card } from "../components/Card";
 import { useFetch } from "../hooks/useFetch";
 
 export const MovieList = ({ title, apiPath }) => {
-  
+
   const { data: movies } = useFetch(apiPath);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const MovieList = ({ title, apiPath }) => {
         <h5 className="text-danger py-2 border-bottom">{title}</h5>
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 py-2">
           {movies.map((movie) => {
-            return <Card key={movie.id} movie={movie}/>;
+            return <Card key={movie.id} movie={movie} />;
           })}
         </div>
       </main>
