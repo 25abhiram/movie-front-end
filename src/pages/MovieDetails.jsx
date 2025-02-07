@@ -93,7 +93,7 @@ export const MovieDetails = () => {
             <i className="bi bi-star-fill text-warning"></i>{" "}
             {movie.averageRating} |{" "}
             <i className="bi bi-people-fill text-success"></i>{" "}
-            {movie.reviewIds.length} reviews
+            {movie.reviewIds? movie.reviewIds.length : 0} reviews
           </p>
           <table className="table table-bordered w-50 met-2">
             <tbody>

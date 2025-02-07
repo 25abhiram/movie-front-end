@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom"
 
-export const Header = () => {
+export const Header = ({ setShowLogin }) => {
   const navigator = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,6 +29,7 @@ export const Header = () => {
           <form onSubmit={handleSearch}>
             <input type="search" className="form-control" placeholder="search" name="search" />
           </form>
+          <button className="btn ms-3 btn-outline-light stretched-link" onClick={() => setShowLogin(true)}>sign in</button>
         </div>
       </div>
     </nav>
