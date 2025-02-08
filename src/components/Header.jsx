@@ -1,7 +1,19 @@
+import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom"
+import { StoreContext } from "../context/StoreContext";
+import './Header.css'
 
-export const Header = ({ setShowLogin }) => {
+export const Header = ({setShowLogin}) => {
+const {token,setToken}=useContext(StoreContext);
+
   const navigator = useNavigate();
+
+  const logout=()=>{
+    localStorage.removeItem("token");
+    setToken("");
+    navigator("/");
+  }
+
   const handleSearch = (e) => {
     e.preventDefault();
     const queryTerm = e.target.search.value;
@@ -29,7 +41,14 @@ export const Header = ({ setShowLogin }) => {
           <form onSubmit={handleSearch}>
             <input type="search" className="form-control" placeholder="search" name="search" />
           </form>
-          <button className="btn ms-3 btn-outline-light stretched-link" onClick={() => setShowLogin(true)}>sign in</button>
+          {!token?<button className="btn ms-3 btn-outline-light stretched-link" onClick={()=>setShowLogin(true)}>sign in</button>
+          :<div className="navbar-profile">
+            <i className="navbar-profile bi bi-person-circle fs-3 text-light ms-3"></i>
+            <ul className="nav-profile-dropdown">
+              <li onClick={logout}><i className="bi bi-box-arrow-right fs-3 text-light"></i>Logout</li>
+            </ul>
+            </div>}
+          
         </div>
       </div>
     </nav>
