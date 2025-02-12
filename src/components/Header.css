@@ -1,34 +1,34 @@
 .navbar-profile {
     position: relative;
-}
-
-.nav-profile-dropdown {
+  }
+  
+  .nav-profile-dropdown {
     position: absolute;
     display: none;
     right: 0;
     z-index: 1;
-}
-
-.navbar-profile:hover .nav-profile-dropdown {
+    width: 130px;
+  }
+  
+  .navbar-profile:hover .nav-profile-dropdown {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    background-color: #6c757d;
-    padding: 2px 15px;
+    background-color: #eff0ff;
+    padding: 12px 12px;
     border-radius: 4px;
     border: 1px solid #0d6efd;
     outline: 2px solid white;
     list-style: none;
-}
-
-.nav-profile-dropdown li {
+  }
+  
+  .nav-profile-dropdown li {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    color: white;
-}
-
-.nav-profile-dropdown li:hover {
+  }
+  
+  .nav-profile-dropdown li:hover {
     color: #0d6efd;
-}
+  }
+  

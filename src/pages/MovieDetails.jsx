@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import backup from "../assets/backup.jpg";
 import { FaStar } from "react-icons/fa"; // Import for star icons
+import { StoreContext } from "../context/StoreContext";
 
 export const MovieDetails = () => {
   const params = useParams();
@@ -13,6 +14,8 @@ export const MovieDetails = () => {
   const image = movie.poster_path
     ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
     : backup;
+
+  const{watchlistMovies,addToWatchlist,removeFromWatchlist}=useContext(StoreContext);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -122,6 +125,11 @@ export const MovieDetails = () => {
           >
             View Trailer
           </a>
+
+          {!watchlistMovies[params.id]
+          ?<button onClick={()=>addToWatchlist(params.id)} className="btn btn-success ms-3">Add to Watchlist</button>
+          :<button onClick={()=>removeFromWatchlist(params.id)} className="btn btn-danger ms-3">Remove from Watchlist</button>
+          }
 
           {/* Rating and Review Section */}
           <div className="mt-4">

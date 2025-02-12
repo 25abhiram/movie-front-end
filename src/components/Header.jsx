@@ -4,13 +4,15 @@ import { StoreContext } from "../context/StoreContext";
 import './Header.css'
 
 export const Header = ({setShowLogin}) => {
-const {token,setToken}=useContext(StoreContext);
+const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
 
   const navigator = useNavigate();
 
   const logout=()=>{
     localStorage.removeItem("token");
+    localStorage.removeItem("userDetails");
     setToken("");
+    setUserDetails(null);
     navigator("/");
   }
 
@@ -41,11 +43,16 @@ const {token,setToken}=useContext(StoreContext);
           <form onSubmit={handleSearch}>
             <input type="search" className="form-control" placeholder="search" name="search" />
           </form>
+          <NavLink to="/watchlist" className="nav-link">
+          <i className="bi bi-bag fs-3 text-light ms-3"></i>
+          </NavLink>
           {!token?<button className="btn ms-3 btn-outline-light stretched-link" onClick={()=>setShowLogin(true)}>sign in</button>
           :<div className="navbar-profile">
             <i className="navbar-profile bi bi-person-circle fs-3 text-light ms-3"></i>
             <ul className="nav-profile-dropdown">
-              <li onClick={logout}><i className="bi bi-box-arrow-right fs-3 text-light"></i>Logout</li>
+              <li><i className="bi bi-person-circle fs-6"></i>My Profile</li>
+              <hr />
+              <li onClick={logout}><i className="bi bi-box-arrow-right fs-6"></i>Logout</li>
             </ul>
             </div>}
           
