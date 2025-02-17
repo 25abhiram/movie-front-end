@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import backup from "../assets/backup.jpg";
 import { FaStar } from "react-icons/fa"; // Import for star icons
+import { StoreContext } from "../context/StoreContext";
 
 export const MovieDetails = () => {
   const params = useParams();
@@ -9,11 +10,12 @@ export const MovieDetails = () => {
   const [rating, setRating] = useState(0); // State for the star rating
   const [hover, setHover] = useState(0); // State for hover effect on stars
   const [reviewText, setReviewText] = useState(""); // State for review input
-  const key = import.meta.env.VITE_API_KEY;
-  const url = `https://api.themoviedb.org/3/movie/${params.id}?api_key=${key}`;
+  const url = `http://localhost:8080/api/v1/movies/${params.id}`;
   const image = movie.poster_path
     ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
     : backup;
+
+  const{watchlistMovies,addToWatchlist,removeFromWatchlist}=useContext(StoreContext);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -27,6 +29,48 @@ export const MovieDetails = () => {
   useEffect(() => {
     document.title = `${movie.title}`;
   });
+
+  const handleSubmitReview = async () => {
+    if (rating > 0 && reviewText.trim() !== "") {
+      try {
+        // Prepare request payload
+        const reviewData = {
+          movieId: params.id, // Get movie ID from URL params
+          rating: rating,
+          reviewText: reviewText,
+        };
+
+        // Send POST request using fetch
+        const response = await fetch(
+          "http://localhost:8080/api/v1/reviews/create",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(reviewData), // Convert JavaScript object to JSON
+          }
+        );
+
+        // Check response status
+        if (response.ok) {
+          alert("Review submitted successfully!");
+        } else {
+          alert("Failed to submit review.");
+        }
+
+        // Reset the form after submission
+        setRating(0);
+        setReviewText("");
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        alert("An error occurred while submitting your review.");
+      }
+    } else {
+      alert("Please provide a rating and a review!");
+    }
+  };
+
   return (
     <main className="container">
       <h5 className="text-danger py-2 border-bottom mb-3">{movie.title}</h5>
@@ -36,12 +80,12 @@ export const MovieDetails = () => {
         </div>
         <div className="col-md-8">
           <h3 className="text-primary">{movie.title}</h3>
-          <p className="mt-3">{movie.overview}</p>
+          <p className="mt-3">{movie.description}</p>
           {movie.genres ? (
             <p className="d-flex gap-3">
-              {movie.genres.map((genre) => (
-                <span key={genre.id} className="badge bg-danger">
-                  {genre.name}
+              {movie.genres.map((genre,index) => (
+                <span key={index} className="badge bg-danger">
+                  {genre}
                 </span>
               ))}
             </p>
@@ -50,9 +94,9 @@ export const MovieDetails = () => {
           )}
           <p className="mt-2">
             <i className="bi bi-star-fill text-warning"></i>{" "}
-            {movie.vote_average} |{" "}
+            {movie.averageRating} |{" "}
             <i className="bi bi-people-fill text-success"></i>{" "}
-            {movie.vote_count} reviews
+            {movie.reviewIds? movie.reviewIds.length : 0} reviews
           </p>
           <table className="table table-bordered w-50 met-2">
             <tbody>
@@ -70,17 +114,22 @@ export const MovieDetails = () => {
               </tr>
               <tr>
                 <th>Release Date</th>
-                <td>{movie.release_date}</td>
+                <td>{movie.releaseDate}</td>
               </tr>
             </tbody>
           </table>
           <a
             className="btn btn-warning"
             target="_blank"
-            href={`https://www.imdb.com/title/${movie.imdb_id}/`}
+            href={`${movie.trailerLink}`}
           >
-            View in IMDB
+            View Trailer
           </a>
+
+          {!watchlistMovies[params.id]
+          ?<button onClick={()=>addToWatchlist(params.id)} className="btn btn-success ms-3">Add to Watchlist</button>
+          :<button onClick={()=>removeFromWatchlist(params.id)} className="btn btn-danger ms-3">Remove from Watchlist</button>
+          }
 
           {/* Rating and Review Section */}
           <div className="mt-4">
@@ -124,15 +173,7 @@ export const MovieDetails = () => {
               </button>
               <button
                 className="btn btn-primary mt-3"
-                onClick={() => {
-                  if (rating > 0 && reviewText.trim() !== "") {
-                    alert(`Rating: ${rating}\nReview: ${reviewText}`);
-                    setRating(0);
-                    setReviewText("");
-                  } else {
-                    alert("Please provide a rating and a review!");
-                  }
-                }}
+                onClick={handleSubmitReview}
                 disabled={rating === 0 || reviewText.trim() === ""}
               >
                 Submit Review
