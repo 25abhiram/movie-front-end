@@ -13,6 +13,7 @@ export const MovieDetails = () => {
   const [reviewText, setReviewText] = useState(""); // State for review input
   const [userReview, setUserReview] = useState(null); // Store user review if exists
   const [isEditing, setIsEditing] = useState(false);
+  const [reviews, setReviews] = useState([]); // Store all reviews
   const url = `http://localhost:8080/api/v1/movies/${params.id}`;
   const image = movie.poster_path
     ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
@@ -60,7 +61,7 @@ export const MovieDetails = () => {
           `http://localhost:8080/api/v1/reviews/${params.id}/${userDetails.userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,  // ✅ Include JWT token
+              Authorization: `Bearer ${token}`, // ✅ Include JWT token
             },
           }
         )
@@ -73,7 +74,23 @@ export const MovieDetails = () => {
           setUserReview(null);
         });
     }
-  }, [userDetails, params.id,token]);
+  }, [userDetails, params.id, token]);
+
+  // fetch all reviews
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/reviews/movie/${params.id}`
+        );
+        setReviews(response.data); // ✅ Store reviews in state
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setReviews([]); // If no reviews, set an empty array
+      }
+    }
+    fetchReviews();
+  }, [params.id]); // Fetch when movie ID changes
 
   // Handle Review Submission (Create or Update)
   const handleSubmitReview = async () => {
@@ -83,6 +100,7 @@ export const MovieDetails = () => {
         const reviewData = {
           movieId: params.id, // Get movie ID from URL params
           userId: userDetails?.userId,
+          username: userDetails?.username,
           rating: rating,
           reviewText: reviewText,
         };
@@ -129,9 +147,18 @@ export const MovieDetails = () => {
         setIsEditing(false);
         fetchMovies();
 
-        // Reset the form after submission
-        // setRating(0);
-        // setReviewText("");
+        // Update reviews state dynamically without reloading
+        setReviews((prevReviews) => {
+          if (userReview) {
+            return prevReviews.map((review) =>
+              review.reviewId === response.data.reviewId
+                ? response.data
+                : review
+            );
+          } else {
+            return [...prevReviews, response.data];
+          }
+        });
       } catch (error) {
         console.error("Error submitting review:", error);
         alert("An error occurred while submitting your review.");
@@ -153,6 +180,10 @@ export const MovieDetails = () => {
         }
       );
       alert("Review deleted successfully!");
+      // Remove deleted review from state
+      setReviews((prevReviews) =>
+        prevReviews.filter((review) => review.reviewId !== userReview.reviewId)
+      );
       setUserReview(null);
       setRating(0);
       setReviewText("");
@@ -319,6 +350,50 @@ export const MovieDetails = () => {
             )}
           </div>
         </div>
+      </div>
+      {/* Reviews Section */}
+      <div className="mt-5">
+        <h4 className="text-primary border-bottom pb-2">User Reviews</h4>
+
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              key={review.reviewId}
+              className="card shadow-sm border-0 rounded-3 my-3"
+            >
+              <div className="card-body">
+                {/* Header: User Info and Date */}
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex align-items-center">
+                    <i className="bi bi-person-circle fs-3 text-secondary me-2"></i>
+                    <div>
+                      <h6 className="mb-0 text-primary">{review.username}</h6>
+                      <small className="text-muted">
+                        {new Date(review.timeStamp).toLocaleDateString()}
+                      </small>
+                    </div>
+                  </div>
+                  <div className="text-warning">
+                    {[...Array(5)].map((_, index) => (
+                      <FaStar
+                        key={index}
+                        size={18}
+                        color={index < review.rating ? "#ffc107" : "#e4e5e9"}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Review Text */}
+                <p className="mt-3 text-dark">{review.reviewText}</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="alert alert-info mt-3">
+            No reviews yet. Be the first to review this movie!
+          </div>
+        )}
       </div>
     </main>
   );
