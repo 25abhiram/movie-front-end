@@ -10,6 +10,7 @@ const StoreContextProvider = (props) => {
   const url = "http://localhost:8080";
   const [movie_list, setMovieList] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
+  const [preferences, setPreferences] = useState([]);
 
   const fetchMovieList = async () => {
     const response = await axios.get(url + "/api/v1/movies/all");
@@ -43,6 +44,27 @@ const StoreContextProvider = (props) => {
     }
   };
 
+  const loadUserPreferences = async () => {
+    if (!token || !userDetails?.userId) return; // Ensure user is logged in
+
+    try {
+      const response = await axios.get(
+        `${url}/api/users/${userDetails?.userId}/preferences`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setPreferences(response.data || []); // Load preferences
+    } catch (error) {
+      console.error("Error fetching user preferences:", error);
+      setPreferences([]); // Default to an empty array if an error occurs
+    }
+  };
+
   useEffect(() => {
     async function loadData() {
       await fetchMovieList();
@@ -71,7 +93,8 @@ const StoreContextProvider = (props) => {
 
   useEffect(() => {
     if (token && userDetails?.userId) {
-      loadWatchlistData();
+      loadUserPreferences(); // Load preferences when user logs in
+      loadWatchlistData(); // Load watchlist when user logs in
     }
   }, [token, userDetails]);
 
@@ -126,10 +149,29 @@ const StoreContextProvider = (props) => {
     }
   };
 
+  const updatePreferences = async (newPreferences) => {
+    try {
+      const response = await axios.put(
+        `${url}/api/users/${userDetails?.userId}/preferences`,
+        newPreferences, // Send new preferences
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setPreferences(response.data.preferences); // Update preferences
+    } catch (error) {
+      console.error("Error updating preferences:", error);
+    }
+  };
+
   useEffect(() => {
     console.log(watchlistMovies);
     console.log(movie_list);
     console.log(userDetails);
+    console.log(preferences);
   }, [watchlistMovies, movie_list, userDetails]);
 
   const contextValue = {
@@ -142,6 +184,10 @@ const StoreContextProvider = (props) => {
     movie_list,
     userDetails,
     setUserDetails,
+    preferences,
+    setPreferences,
+    loadUserPreferences,
+    updatePreferences,
   };
 
   return (
