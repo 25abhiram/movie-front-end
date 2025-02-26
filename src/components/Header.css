@@ -7,7 +7,7 @@
     display: none;
     right: 0;
     z-index: 1;
-    width: 130px;
+    width: 150px;
   }
   
   .navbar-profile:hover .nav-profile-dropdown {
