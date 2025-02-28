@@ -140,8 +140,10 @@ const StoreContextProvider = (props) => {
     addToWatchlist,
     removeFromWatchlist,
     movie_list,
+    setMovieList,
     userDetails,
     setUserDetails,
+    fetchMovieList,
   };
 
   return (
