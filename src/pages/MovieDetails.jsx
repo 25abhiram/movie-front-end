@@ -61,7 +61,7 @@ export const MovieDetails = () => {
           `http://localhost:8080/api/v1/reviews/${params.id}/${userDetails.userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // ✅ Include JWT token
+              Authorization: `Bearer ${token}`, // Include JWT token
             },
           }
         )
@@ -83,7 +83,7 @@ export const MovieDetails = () => {
         const response = await axios.get(
           `http://localhost:8080/api/v1/reviews/movie/${params.id}`
         );
-        setReviews(response.data); // ✅ Store reviews in state
+        setReviews(response.data); //  Store reviews in state
       } catch (error) {
         console.error("Error fetching reviews:", error);
         setReviews([]); // If no reviews, set an empty array
@@ -190,6 +190,30 @@ export const MovieDetails = () => {
       fetchMovies();
     } catch (error) {
       console.error("Error deleting review:", error);
+    }
+  };
+
+  // Handle Review Deletion by Admin
+  const handleAdminDeleteReview = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+    try {
+      await axios.delete(`http://localhost:8080/api/v1/reviews/${reviewId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      alert("Review deleted successfully!");
+      // Remove deleted review from state
+      setReviews((prevReviews) =>
+        prevReviews.filter((review) => review.reviewId !== reviewId)
+      );
+
+      fetchMovies(); // Refresh movie details
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      alert("Error deleting review.");
     }
   };
 
@@ -386,6 +410,15 @@ export const MovieDetails = () => {
 
                 {/* Review Text */}
                 <p className="mt-3 text-dark">{review.reviewText}</p>
+                {/* DELETE BUTTON (ONLY FOR ADMIN) */}
+                {userDetails?.roles.includes("ROLE_ADMIN") && (
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => handleAdminDeleteReview(review.reviewId)}
+                  >
+                    Delete Review
+                  </button>
+                )}
               </div>
             </div>
           ))

@@ -4,4 +4,7 @@ export { PageNotFound } from "./PageNotFound"
 export { MovieDetails } from "./MovieDetails"
 export { AllMovies } from "./AllMovies"
 export {Watchlist} from "./Watchlist"
+export {AdminPage} from "./AdminPage"
+export {Sidebar} from "./Sidebar"
 export {UserProfile} from "./UserProfile"
+
