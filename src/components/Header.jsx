@@ -38,7 +38,7 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
             <li className="nav-item"><NavLink to="/movies/upcoming" className="nav-link">Upcoming</NavLink></li>
             <li className="nav-item"><NavLink to="/movies/recommended" className="nav-link">Recommended
             </NavLink></li>
-            <li className="nav-item"><NavLink to="/movies/theatre" className="nav-link">Theatre</NavLink></li>
+            <li className="nav-item"><NavLink to="/theatre" className="nav-link">Theatre</NavLink></li>
           </ul>
           <form onSubmit={handleSearch}>
             <input type="search" className="form-control" placeholder="search" name="search" />

@@ -7,4 +7,5 @@ export {Watchlist} from "./Watchlist"
 export {AdminPage} from "./AdminPage"
 export {Sidebar} from "./Sidebar"
 export {UserProfile} from "./UserProfile"
+export {Theatre} from "./Theatre"
 
