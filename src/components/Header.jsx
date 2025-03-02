@@ -43,6 +43,12 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
           <form onSubmit={handleSearch}>
             <input type="search" className="form-control" placeholder="search" name="search" />
           </form>
+         
+          {/* Show Admin Panel if user is admin */}
+          {token && userDetails?.roles.includes("ROLE_ADMIN") && (
+            <NavLink to="/admin" className="btn btn-warning ms-3">Admin</NavLink>
+          )}
+
           {!token?<button className="btn ms-3 btn-outline-light stretched-link" onClick={()=>setShowLogin(true)}>sign in</button>
           :<div className="navbar-profile">
             <i className="navbar-profile bi bi-person-circle fs-3 text-light ms-3"></i>
