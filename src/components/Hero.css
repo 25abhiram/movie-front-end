@@ -1,0 +1,74 @@
+.hero-section {
+    
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    text-align: left;
+    position: relative;
+    width: 100vw;
+    height: 90vh;
+    color: white;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+/* GRADIENT OVERLAY */
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.849), rgba(0, 0, 0, 0.696));
+}
+
+/* HERO CONTENT */
+.hero-movie-card {
+    display:flex;
+    align-items: center;
+    
+    border-radius: 10px;
+    width: 240px;
+    height: 360px;
+    position:relative;
+    z-index: 1;
+    padding-bottom: 270px;
+    
+}
+
+/* 🎞️ HERO MOVIE POSTER */
+.hero-movie-poster {
+    width: 240px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid red;  
+    
+}
+.hero-movie-title{
+    position: relative;
+    display: flex;
+    
+}
+
+
+/* 🎭 RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 80vh;
+    }
+
+    .hero-movie-card {
+        flex-direction: column;
+        text-align: center;
+        max-width: 90%;
+    }
+
+    .hero-movie-poster {
+        width: 100px;
+        height: 150px;
+    }
+}
