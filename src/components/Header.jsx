@@ -1,12 +1,16 @@
 import { useContext } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom"
 import { StoreContext } from "../context/StoreContext";
+import { FaSearch } from "react-icons/fa"; // Import FontAwesome Search Icon
 import './Header.css'
 
 export const Header = ({setShowLogin}) => {
 const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
 
   const navigator = useNavigate();
+  const [query, setQuery] = useState("");
+  const [searchType, setSearchType] = useState(""); // Search Type Selection
 
   const logout=()=>{
     localStorage.removeItem("token");
@@ -18,9 +22,11 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const queryTerm = e.target.search.value;
-    e.target.reset();
-    return navigator(`/search?q=${queryTerm}`);
+    if (query.trim() && searchType) {
+      navigator(`/search?type=${searchType}&q=${query}`);
+      setQuery(""); // Reset input field
+      //setSearchType(""); // Reset search type
+    }
   };
   return (
     <nav className="navbar navbar-expand-md fixed-top bg-primary navbar-dark">
@@ -37,17 +43,39 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
             <li className="nav-item"><NavLink to="/movies/all" className="nav-link">Movies</NavLink></li>
             <li className="nav-item"><NavLink to="/movies/upcoming" className="nav-link">Upcoming</NavLink></li>
             <li className="nav-item"><NavLink to="/movies/recommended" className="nav-link">Recommended
-            </NavLink></li>
+            </NavLink></li> 
             <li className="nav-item"><NavLink to="/theatre" className="nav-link">Theatre</NavLink></li>
+            <li className="nav-item"><NavLink to="/about us" className="nav-link">About us</NavLink></li>
           </ul>
-          <form onSubmit={handleSearch}>
-            <input type="search" className="form-control" placeholder="search" name="search" />
+          {/* Search Form with Dropdown */}
+          <form onSubmit={handleSearch} className="search-form">
+            <select
+              className="search-select"
+              value={searchType}
+              onChange={(e) => setSearchType(e.target.value)}
+            >
+              <option value="">select</option>
+              <option value="title">Title</option>
+              <option value="genre">Genre</option>
+              <option value="averageRating">Rating</option>
+            </select>
+            <input
+              type="search"
+              className="form-control search-input"
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              disabled={!searchType}
+            />
+            <button type="submit" className={`search-button ${query.trim() && searchType ? "active" : ""}`} disabled={!query.trim() || !searchType}>
+              <FaSearch />
+            </button>
           </form>
          
-          {/* Show Admin Panel if user is admin */}
+          {/* Show Admin Panel if user is admin*/}
           {token && userDetails?.roles.includes("ROLE_ADMIN") && (
             <NavLink to="/admin" className="btn btn-warning ms-3">Admin</NavLink>
-          )}
+          )} 
 
           {!token?<button className="btn ms-3 btn-outline-light stretched-link" onClick={()=>setShowLogin(true)}>sign in</button>
           :<div className="navbar-profile">
