@@ -1,4 +1,5 @@
 import "./Home.css"; // Import CSS for animations
+import { MovieCardList } from "../components/MovieCardList"; // Import MovieCardList component
 import useMovies from "../context/useMovies"; // Import custom hook
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext"; // Import StoreContext
@@ -25,17 +26,17 @@ export const Home = () => {
     return () => clearInterval(interval);
   }, [movies, index]);
 
-  // ✅ Function to go to the next movie (slide right)
+  // Function to go to the next movie (slide right)
   const nextMovie = () => {
     setIndex((prevIndex) => (prevIndex + 1) % movies.length);
   };
 
-  // ✅ Function to go to the previous movie (slide left)
+  // Function to go to the previous movie (slide left)
   const prevMovie = () => {
     setIndex((prevIndex) => (prevIndex - 1 + movies.length) % movies.length);
   };
 
-  // ✅ Function to navigate directly via dots
+  // Function to navigate directly via dots
   const goToMovie = (movieIndex) => {
     setIndex(movieIndex);
   };
@@ -80,7 +81,40 @@ export const Home = () => {
 
 
 
-     
+      <div className="top-movies">
+        <h2 className="section-title">
+          <span className="top-picks">| Recently Released </span>
+        </h2>
+        <p className="section-subtitle">Recently Released Movies just for you</p>
+        <MovieCardList movies={recentMovies} />
+      </div>
+
+      {/* TOP PICKS SECTION */}
+      <div className="top-movies">
+        <h2 className="section-title">
+          <span className="top-picks">| Top Picks </span>
+        </h2>
+        <p className="section-subtitle">Top Movies just for you</p>
+        <MovieCardList movies={topMovies} />
+      </div>
+
+      {/* RECOMMENDED MOVIES SECTION */}
+      <div className="recommended-movies">
+        <h2 className="section-title">
+          <span className="top-picks">| Recommended Movies </span>
+        </h2>
+        <p className="section-subtitle">Recommended Movies just for you</p>
+        {recommendedMovies.length > 0 ? (
+          <MovieCardList movies={recommendedMovies} />
+        ) : (
+          <div className="text-center  bg-light p-4">
+            <p>To get the recommendations sign in</p>
+            <button className="btn btn-primary" onClick={() => navigate("")}>
+              sign in to CineHolic
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
