@@ -11,6 +11,7 @@ const StoreContextProvider = (props) => {
   const [movie_list, setMovieList] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
   const [preferences, setPreferences] = useState([]);
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
 
   const fetchMovieList = async () => {
     const response = await axios.get(url + "/api/v1/movies/all");
@@ -65,6 +66,27 @@ const StoreContextProvider = (props) => {
     }
   };
 
+  const loadRecommendedMovies = async () => {
+    if (!token || !userDetails?.userId) return; // Ensure user is logged in
+
+    try {
+      const response = await axios.get(
+        `${url}/api/recommendations/${userDetails?.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setRecommendedMovies(response.data || []); // Load recommended movies
+    } catch (error) {
+      console.error("Error fetching recommended movies:", error);
+      setRecommendedMovies([]); // Default to an empty array if an error occurs
+    }
+  };
+
   useEffect(() => {
     async function loadData() {
       await fetchMovieList();
@@ -95,6 +117,7 @@ const StoreContextProvider = (props) => {
     if (token && userDetails?.userId) {
       loadUserPreferences(); // Load preferences when user logs in
       loadWatchlistData(); // Load watchlist when user logs in
+      loadRecommendedMovies(); // Load recommended movies when user logs in
     }
   }, [token, userDetails]);
 
@@ -190,6 +213,8 @@ const StoreContextProvider = (props) => {
     setPreferences,
     loadUserPreferences,
     updatePreferences,
+    recommendedMovies,
+    loadRecommendedMovies,
   };
 
   return (
