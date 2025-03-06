@@ -107,9 +107,9 @@ export const Home = () => {
         {recommendedMovies.length > 0 ? (
           <MovieCardList movies={recommendedMovies} />
         ) : (
-          <div className="text-center  bg-light p-4">
+          <div className="text-center  p-4">
             <p>To get the recommendations sign in</p>
-            <button className="btn btn-primary" onClick={() => navigate("")}>
+            <button className="btn btn-dark" onClick={() => navigate("")}>
               sign in to CineHolic
             </button>
           </div>
