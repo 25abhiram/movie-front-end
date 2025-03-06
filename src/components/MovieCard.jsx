@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlay, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCirclePlay, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./MovieCard.css"; // CSS file for styling
 import backup from "../assets/backup.jpg";
 import { StoreContext } from "../context/StoreContext";
@@ -9,26 +9,12 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export const MovieCard = ({ movie }) => {
-  const params = useParams();
-  const url = `http://localhost:8080/api/v1/movies/${params.id}`;
 
 const {
-    watchlistMovies,
-    addToWatchlist,
-    removeFromWatchlist,
-  } = useContext(StoreContext);
-  const fetchMovies = async () => {
-    try {
-      const response = await axios.get(url);
-      setMovie(response.data);
-    } catch (error) {
-      console.error("Error fetching movie details:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMovies();
-  }, []);
+  watchlistMovies,
+  addToWatchlist,
+  removeFromWatchlist,
+} = useContext(StoreContext);
 
 
   return (
@@ -39,9 +25,21 @@ const {
         <img src={movie.poster_path || backup} alt={movie.title} className="movie-poster" />
       </Link>
         {/* Add to Watchlist Button */}
-        <button className="watchlist-btn">
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
+        {!watchlistMovies[movie?.movieId] ? (
+            <button
+              onClick={() => addToWatchlist(movie?.movieId)}
+              className="watchlist-btn"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          ) : (
+            <button
+              onClick={() => removeFromWatchlist(movie?.movieId)}
+              className="remove-watchlist-btn"
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
+          )}
       </div>
 
       {/* Movie Details */}
@@ -56,25 +54,21 @@ const {
         <h4 className="movie-title">{movie.title}</h4>
 
         {/* Watchlist Button */}
-        <button className="watchlist">
-          <FontAwesomeIcon icon={faPlus} /> Watchlist
-        </button>
-
-
-        {/* {!watchlistMovies[params.id] ? (
-            <button className="watchlist"
-              onClick={() => addToWatchlist(params.id)}
+        {!watchlistMovies[movie?.movieId] ? (
+            <button
+              onClick={() => addToWatchlist(movie?.movieId)}
+              className="watchlist"
             >
-              <FontAwesomeIcon icon={faPlus} /> Add Watchlist
+              <FontAwesomeIcon icon={faPlus} /> Watchlist
             </button>
           ) : (
             <button
-              onClick={() => removeFromWatchlist(params.id)}
+              onClick={() => removeFromWatchlist(movie?.movieId)}
               className="watchlist"
             >
-              Remove Watchlist
+              <FontAwesomeIcon icon={faMinus} /> Watchlist
             </button>
-          )} */}
+          )}
 
         {/* Trailer Button */}
         

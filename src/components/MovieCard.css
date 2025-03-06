@@ -48,6 +48,21 @@
     background: rgba(117, 116, 116, 0.67);
     
   }
+
+  .remove-watchlist-btn{
+    position: absolute;
+    left: 0px;
+    background: rgb(255, 255, 0);
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 13px;
+    cursor: pointer;
+  }
+
+  .remove-watchlist-btn:hover {
+    background: rgba(117, 116, 116, 0.67);
+    
+  }
   
   /* Movie Details */
   .movie-details {
@@ -92,8 +107,8 @@
   }
   
   .watchlist {
-    background: #3e3e3e49;
-    color: rgba(11, 104, 150, 0.692);
+    background: #9c9c9c49;
+    color: rgba(170, 193, 255, 0.692);
   }
   
   .trailer-btn {
