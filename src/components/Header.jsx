@@ -41,11 +41,8 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             <li className="nav-item"><NavLink to="/" className="nav-link">Home</NavLink></li>
             <li className="nav-item"><NavLink to="/movies/all" className="nav-link">Movies</NavLink></li>
-            <li className="nav-item"><NavLink to="/movies/upcoming" className="nav-link">Upcoming</NavLink></li>
-            <li className="nav-item"><NavLink to="/movies/recommended" className="nav-link">Recommended
-            </NavLink></li> 
             <li className="nav-item"><NavLink to="/theatre" className="nav-link">Theatre</NavLink></li>
-            <li className="nav-item"><NavLink to="/about us" className="nav-link">About us</NavLink></li>
+            <li className="nav-item"><NavLink to="/about-us" className="nav-link">About us</NavLink></li>
           </ul>
           {/* Search Form with Dropdown */}
           <form onSubmit={handleSearch} className="search-form">
