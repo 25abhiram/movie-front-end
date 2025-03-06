@@ -41,7 +41,7 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        bottom: 15%;
+        bottom: 5%;
         left: 50%;
         transform: translateX(-50%);
         gap: 10px;
@@ -51,7 +51,7 @@
         width: 12px;
         height: 12px;
         background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 50%;
+        border-radius: 100%;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }
@@ -62,7 +62,7 @@
     }
     
     .active-dot {
-        background-color: #ff0202; /* ✅ Highlight active movie dot */
+        background-color: #007bff; /* ✅ Highlight active movie dot */
         transform: scale(1.5);
     }
     
