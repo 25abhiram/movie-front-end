@@ -1,74 +1,107 @@
 .hero-section {
-    
     display: flex;
-    justify-content: left;
-    align-items: flex-end;
-    text-align: left;
     position: relative;
     width: 100vw;
     height: 90vh;
     color: white;
     background-size: 100% 100%;
-    background-position: center center;
+    background-position: center;
     background-repeat: no-repeat;
     background-color: black;
-}
-
-/* GRADIENT OVERLAY */
-.hero-section::after {
+  }
+  
+  /* GRADIENT OVERLAY */
+  .hero-section::before {
     content: "";
     position: absolute;
     bottom: 0;
+    z-index: 1;
     left: 0;
     width: 100%;
-    height: 100%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.849), rgba(0, 0, 0, 0.696));
-}
-
-/* HERO CONTENT */
-.hero-movie-card {
-    display:flex;
-    align-items: center;
-    
-    border-radius: 10px;
-    width: 240px;
-    height: 360px;
-    position:relative;
-    z-index: 1;
-    padding-bottom: 270px;
-    
-}
-
-/* 🎞️ HERO MOVIE POSTER */
-.hero-movie-poster {
-    width: 240px;
-    height: 360px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid red;  
-    
-}
-.hero-movie-title{
-    position: relative;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.892), rgba(0, 0, 0, 0.848));
+  }
+  
+  /* HERO CONTENT */
+  .hero-movie-card {
     display: flex;
-    
-}
-
-
-/* 🎭 RESPONSIVE DESIGN */
-@media (max-width: 768px) {
+    z-index: 1;
+    padding-left: 150px;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+  }
+  
+  /* 🎞️ HERO MOVIE POSTER */
+  .hero-movie-poster {
+    position: relative; /* Make poster container relative for absolute positioning of play button */
+    width: 240px;
+    height: 360px;
+    border-radius: 10px;
+    border: 2px solid rgb(255, 247, 11);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* Ensure the play button stays within the poster */
+  }
+  
+  .hero-movie-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the poster */
+  }
+  
+  /* PLAY BUTTON CONTAINER */
+  .hero-play {
+    position: absolute; /* Position absolutely within the hero-movie-poster */
+    top: 50%; /* Move to the vertical center */
+    left: 50%; /* Move to the horizontal center */
+    transform: translate(-50%, -50%); /* Adjust to truly center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* PLAY BUTTON */
+  .play-trailer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent; /* Semi-transparent background */
+    border-radius: 100%; /* Circular button */
+    padding: 15px;
+    padding-right: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: 4px solid rgb(255, 247, 11); /* Icon border */
+  }
+  
+  .play-trailer-btn:hover {
+    background: rgba(255, 255, 255, 0.271); /* Darken on hover */
+    border-color: antiquewhite;
+  }
+  
+  .play-icon {
+    font-size: 2rem; /* Icon size */
+    color: rgb(255, 247, 11); /* Icon color */
+  }
+  .play-icon:hover {
+    color: antiquewhite;
+  }
+  
+  /* 🎭 RESPONSIVE DESIGN */
+  @media (max-width: 768px) {
     .hero-section {
-        height: 80vh;
+      height: 80vh;
     }
-
+  
     .hero-movie-card {
-        flex-direction: column;
-        text-align: center;
-        max-width: 90%;
+      flex-direction: column;
+      text-align: center;
+      max-width: 90%;
+      padding-left: 0; /* Remove padding for smaller screens */
     }
-
+  
     .hero-movie-poster {
-        width: 100px;
-        height: 150px;
+      width: 100px;
+      height: 150px;
     }
-}
+  }
+
