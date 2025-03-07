@@ -1,22 +1,19 @@
-import "./Home.css"; // Import CSS for animations
-import { MovieCardList } from "../components/MovieCardList"; // Import MovieCardList component
-import useMovies from "../context/useMovies"; // Import custom hook
+import "./Home.css";
+import { MovieCardList } from "../components/MovieCardList";
+import useMovies from "../context/useMovies";
 import { useContext } from "react";
-import { StoreContext } from "../context/StoreContext"; // Import StoreContext
+import { StoreContext } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Hero } from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-
-
 export const Home = () => {
   const { movies, recentMovies, topMovies, loading, error } = useMovies();
-  const { recommendedMovies } = useContext(StoreContext); // Access recommendedMovies from StoreContext
+  const { recommendedMovies, userDetails, preferences } = useContext(StoreContext);
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
-
 
   useEffect(() => {
     if (movies.length === 0) return;
@@ -41,16 +38,38 @@ export const Home = () => {
     setIndex(movieIndex);
   };
 
-
+  // Function to handle recommendation section logic
+  const handleRecommendationSection = () => {
+    if (!userDetails) {
+      // User is not logged in
+      return (
+        <div className="text-center text-white p-4">
+          <p>To get recommendations, sign in.</p>
+        </div>
+      );
+    } else if (preferences.length === 0) {
+      // User is logged in but has not selected preferences
+      return (
+        <div className="text-center text-white p-4">
+          <p>Please select your preferences to get recommendations.</p>
+          <button className="btn btn-dark" onClick={() => navigate("profile")}>
+        Select Preferences
+          </button>
+        </div>
+      );
+    } else {
+      // User is logged in and has selected preferences
+      return <MovieCardList movies={recommendedMovies} />;
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="home">
-
-       {/* 🎬 HERO SECTION */}
-       <div className="hero-container">
+      {/* 🎬 HERO SECTION */}
+      <div className="hero-container">
         <div className="slider-container">
           <div className="slider" style={{ transform: `translateX(-${index * 100}%)` }}>
             {movies.map((movie, movieIndex) => (
@@ -79,8 +98,7 @@ export const Home = () => {
         </div>
       </div>
 
-
-
+      {/* RECENTLY RELEASED SECTION */}
       <div className="top-movies">
         <h2 className="section-title">
           <span className="top-picks">| Recently Released </span>
@@ -104,16 +122,7 @@ export const Home = () => {
           <span className="top-picks">| Recommended Movies </span>
         </h2>
         <p className="section-subtitle">Recommended Movies just for you</p>
-        {recommendedMovies.length > 0 ? (
-          <MovieCardList movies={recommendedMovies} />
-        ) : (
-          <div className="text-center  p-4">
-            <p>To get the recommendations sign in</p>
-            <button className="btn btn-dark" onClick={() => navigate("")}>
-              sign in to CineHolic
-            </button>
-          </div>
-        )}
+        {handleRecommendationSection()}
       </div>
     </div>
   );

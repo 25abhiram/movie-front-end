@@ -37,7 +37,7 @@
     width: 240px;
     height: 360px;
     border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgb(255, 247, 11);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     overflow: hidden; /* Ensure the play button stays within the poster */
   }
@@ -75,11 +75,15 @@
   
   .play-trailer-btn:hover {
     background: rgba(255, 255, 255, 0.271); /* Darken on hover */
+    border-color: antiquewhite;
   }
   
   .play-icon {
     font-size: 2rem; /* Icon size */
     color: rgb(255, 247, 11); /* Icon color */
+  }
+  .play-icon:hover {
+    color: antiquewhite;
   }
   
   /* 🎭 RESPONSIVE DESIGN */
