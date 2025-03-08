@@ -9,6 +9,7 @@ export const AddMovieForm = () => {
     releaseDate: "",
     trailerLink: "",
     poster_path: "",
+    backdrop: "",
     genres: [],
     runtime: "",
     budget: "",
@@ -40,6 +41,7 @@ export const AddMovieForm = () => {
     if (!movie.releaseDate) newErrors.releaseDate = "Release Date is required";
     if (!movie.trailerLink.trim()) newErrors.trailerLink = "Trailer Link is required";
     if (!movie.poster_path.trim()) newErrors.poster_path = "Poster URL is required";
+    if (!movie.backdrop.trim()) newErrors.backdrop = "Backdrop URL is required";
     if (!movie.runtime.trim()) newErrors.runtime = "Runtime is required";
     if (!movie.budget.trim()) newErrors.budget = "Budget is required";
     if (!movie.revenue.trim()) newErrors.revenue = "Revenue is required";
@@ -114,6 +116,14 @@ export const AddMovieForm = () => {
             className={`form-control ${errors.poster_path ? "is-invalid" : ""}`} 
             placeholder="Poster URL" onChange={handleChange} />
           <div className="invalid-feedback">{errors.poster_path}</div>
+        </div>
+
+        {/* Backdrop URL */}
+        <div className="mb-2">
+          <input type="text" name="backdrop" value={movie.backdrop}
+            className={`form-control ${errors.backdrop ? "is-invalid" : ""}`} 
+            placeholder="Backdrop URL" onChange={handleChange} />
+          <div className="invalid-feedback">{errors.backdrop}</div>
         </div>
 
         {/* Genre Checkboxes */}
