@@ -37,14 +37,14 @@ const AboutUs = () => {
         We provide honest reviews, ratings, and personalized recommendations to help you choose the best films.
       </p>
 
-      <h2>Our Mission</h2>
+      <h1>Our Mission</h1>
       <p>
         Our mission is to create a movie-loving community where users can share their thoughts, explore 
         trending movies, and get recommendations based on their preferences.
       </p>
 
-      <h1 className="about-us-title">About Us</h1>
-      <p className="about-us-description">
+      <h1>About Us</h1>
+      <p>
         Meet the talented team behind our success. We are passionate about what we do and strive to deliver the best
         results for our clients.
       </p>
@@ -59,7 +59,7 @@ const AboutUs = () => {
         ))}
       </div>
       <div>
-        <h2>Contact Us</h2>
+        <h1 style={{color: '#666'}}>Contact Us</h1>
        <p> <a href="support@cineholic.com">Email: support@cineholic.com</a> </p>
         <p>Follow us on social media for updates!</p>
       </div>
