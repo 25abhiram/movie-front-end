@@ -60,7 +60,13 @@ export const AddMovieForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/v1/movies", movie);
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:8080/api/v1/movies", movie,{
+        headers: {
+          Authorization: `Bearer ${token}`, // Add JWT token in the request
+          "Content-Type": "application/json",
+        },
+      });
       alert("Movie added successfully!");
 
       // Reset form after successful submission

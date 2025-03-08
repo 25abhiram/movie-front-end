@@ -46,7 +46,10 @@ export const MovieManagement = () => {
           };
 
       const response = await axios.put(`${url}/${movieId}`, movieToUpdate, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+           Authorization: `Bearer ${token}`,
+           "Content-Type": "application/json",
+        },
       });
 
       fetchMovieList();
