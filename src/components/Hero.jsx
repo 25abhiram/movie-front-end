@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
+import { FaPlay } from "react-icons/fa"; // Import the play icon
 import backup from "../assets/backup.jpg";
 import "./Hero.css";
 
 export const Hero = ({ movie }) => {
+  const playTrailer = () => {
+    // Logic to play the trailer
+    console.log("Playing trailer for movie:", movie?.title);
+  };
+
   return (
     <div>
       <div
@@ -11,28 +17,30 @@ export const Hero = ({ movie }) => {
           backgroundImage: `url(${movie?.poster_path || backup})`,
         }}
       >
-        
-        <div className="container">
         <div
-          className="hero-content"
+          className="hero-movie-card"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-         <Link to={`/movie/${movie?.movieId}`} className="hero-link">
-
-          {/* 🎬 Hero Movie Card Component */}
-          <div className="hero-movie-card">
-            <img
-              src={movie?.poster_path || backup}
-              alt={movie?.title}
-              className="hero-movie-poster"
-            />
-          </div>
+          <Link to={`/movie/${movie?.movieId}`} className="hero-link">
+            {/* 🎬 Hero Movie Card Component */}
+            <div className="hero-movie-poster">
+              <img
+                src={movie?.poster_path || backup}
+                alt={movie?.title}
+                className="hero-movie-poster-img"
+              />
+              {/* Play Button Inside Poster */}
+              <div className="hero-play">
+                <Link to={`${movie.trailerLink}`} className="play-trailer-btn" onClick={playTrailer}>
+                  <FaPlay className="play-icon" />
+                </Link>
+              </div>
+            </div>
           </Link>
         </div>
-        </div>
       </div>
-      </div>
+    </div>
   );
 };

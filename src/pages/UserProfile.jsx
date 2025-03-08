@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfile = () => {
   const { userDetails, preferences, updatePreferences } = useContext(StoreContext);
   const [newPreferences, setNewPreferences] = useState([]);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     setNewPreferences(preferences); // Load preferences when page loads
@@ -42,6 +44,7 @@ export const UserProfile = () => {
                       prev.includes(genre) ? prev.filter((p) => p !== genre) : [...prev, genre]
                     );
                   }}
+                  
                 >
                   {genre}
                 </button>
@@ -50,7 +53,10 @@ export const UserProfile = () => {
 
             {/* Save Button */}
             <div className="text-center mt-4">
-              <button className="btn btn-primary px-4 py-2" onClick={handleSave}>
+              <button className="btn btn-primary px-4 py-2" onClick={()=>{
+                handleSave();
+                Navigate("/");
+                }} >
                 Save Preferences
               </button>
             </div>

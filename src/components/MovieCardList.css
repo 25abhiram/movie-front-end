@@ -1,0 +1,60 @@
+.movie-list {
+    position: relative;
+    padding: 110px;
+    padding-top: 50px;
+    background: rgb(0, 0, 0);
+    color: white;
+  }
+  
+  
+  .section-subtitle {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 15px;
+  }
+  
+  /* Movie Container - Fixed Size & Scroll */
+  .movie-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 15px;
+    padding: 10px;
+    white-space: nowrap; /* ✅ Ensures inline scrolling */
+    width: 100%;
+    max-width: 100vw;
+    align-items: stretch; /* ✅ Ensures all cards align properly */
+
+  }
+  
+  .movie-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Scroll Buttons */
+  .scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  
+  .scroll-btn:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: black;
+  }
+  
+  .left {
+    left: 30px;
+  }
+  
+  .right {
+    right: 30px;
+  }
