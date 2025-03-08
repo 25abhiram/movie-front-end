@@ -68,7 +68,7 @@ export const Home = () => {
 
   return (
     <div className="home">
-      {/* 🎬 HERO SECTION */}
+      {/* HERO SECTION */}
       <div className="hero-container">
         <div className="slider-container">
           <div className="slider" style={{ transform: `translateX(-${index * 100}%)` }}>

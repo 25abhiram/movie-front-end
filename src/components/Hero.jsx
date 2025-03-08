@@ -17,7 +17,7 @@ export const Hero = ({ movie }) => {
       <div
         className="hero-section"
         style={{
-          backgroundImage: `url(${movie?.poster_path || backup})`,
+          backgroundImage: `url(${movie?.backdrop || backup})`,
         }}
       >
         <div
@@ -27,7 +27,7 @@ export const Hero = ({ movie }) => {
           transition={{ duration: 1 }}
         >
           <Link to={`/movie/${movie?.movieId}`} className="hero-link">
-            {/* 🎬 Hero Movie Card Component */}
+            {/* Hero Movie Card Component */}
             <div className="hero-movie-poster">
               <img
                 src={movie?.poster_path || backup}
