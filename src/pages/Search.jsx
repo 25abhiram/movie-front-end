@@ -17,7 +17,7 @@ export const Search = ({ apiBasePath }) => { // Correct parameter name (apiBaseP
 
   return (
     <main className="container">
-      <h5 className="text-danger py-2 border-bottom">
+      <h5 className="text-danger mt-3 mb-3 fs-3 border-bottom">
         {loading
           ? "Loading..."
           : !queryTerm || !searchType

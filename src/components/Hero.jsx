@@ -7,6 +7,9 @@ export const Hero = ({ movie }) => {
   const playTrailer = () => {
     // Logic to play the trailer
     console.log("Playing trailer for movie:", movie?.title);
+    if (movie?.trailerLink) {
+      window.open(movie.trailerLink, "_blank");
+    }
   };
 
   return (
@@ -31,14 +34,14 @@ export const Hero = ({ movie }) => {
                 alt={movie?.title}
                 className="hero-movie-poster-img"
               />
-              {/* Play Button Inside Poster */}
-              <div className="hero-play">
-                <Link to={`${movie.trailerLink}`} className="play-trailer-btn" onClick={playTrailer}>
-                  <FaPlay className="play-icon" />
-                </Link>
-              </div>
             </div>
           </Link>
+          {/* Play Button Inside Poster */}
+          <div className="hero-play">
+            <button className="play-trailer-btn" onClick={playTrailer}>
+              <FaPlay className="play-icon" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

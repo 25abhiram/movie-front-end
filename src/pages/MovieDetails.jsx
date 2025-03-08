@@ -219,7 +219,7 @@ export const MovieDetails = () => {
 
   return (
     <main className="container">
-      <h5 className="text-danger py-2 border-bottom mb-3">{movie.title}</h5>
+      <h5 className="text-danger mt-3 mb-3 fs-3 border-bottom">{movie.title}</h5>
       <div className="row">
         <div className="col-md-4">
           <img src={image} className="img-fluid img-thumbnail" />
