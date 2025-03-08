@@ -55,10 +55,17 @@ export const AddTheatreForm = () => {
     }
 
     try {
+      const token = localStorage.getItem("token");
       await axios.post("http://localhost:8080/api/theatres", {
         ...theatre,
         showtimes: theatre.showtimes.split(",").map((time) => time.trim()), // Convert to array
-      });
+      },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach JWT token
+        "Content-Type": "application/json",
+      },
+    });
       alert("Theatre added successfully!");
 
       // Reset form after successful submission

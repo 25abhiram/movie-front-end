@@ -55,7 +55,10 @@ export const TheatreManagement = () => {
       };
 
       await axios.put(`${url}/${theatreId}`, theatreToUpdate, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+         },
       });
 
       fetchTheatreList(); // Refresh list after updating
