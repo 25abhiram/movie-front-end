@@ -4,7 +4,7 @@ import "./MovieCardList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-export const MovieCardList = ({ movies }) => {
+export const MovieCardList = ({ movies,setShowLogin }) => {
   const scrollLeft = () => {
     document.getElementById("movie-container").scrollLeft -= 300;
   };
@@ -23,7 +23,7 @@ export const MovieCardList = ({ movies }) => {
       {/* Movie Cards Container */}
       <div className="movie-container" id="movie-container">
         {movies.map((movie) => (
-          <MovieCard key={movie.movieId} movie={movie} />
+          <MovieCard key={movie.movieId} movie={movie} setShowLogin={setShowLogin} />
         ))}
       </div>
 
