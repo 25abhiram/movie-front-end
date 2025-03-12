@@ -8,13 +8,23 @@ import { StoreContext } from "../context/StoreContext";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie,setShowLogin }) => {
 
 const {
   watchlistMovies,
   addToWatchlist,
   removeFromWatchlist,
+  userDetails,
+  token
 } = useContext(StoreContext);
+
+const handleAddToWatchlist = () => {
+  if (!userDetails || !token) {
+    setShowLogin(true); // Show login modal if user is not logged in
+  } else {
+    addToWatchlist(movie?.movieId);
+  }
+};
 
 
   return (
@@ -27,7 +37,7 @@ const {
         {/* Add to Watchlist Button */}
         {!watchlistMovies[movie?.movieId] ? (
             <button
-              onClick={() => addToWatchlist(movie?.movieId)}
+              onClick={handleAddToWatchlist}
               className="watchlist-btn"
             >
               <FontAwesomeIcon icon={faPlus} />
@@ -56,7 +66,7 @@ const {
         {/* Watchlist Button */}
         {!watchlistMovies[movie?.movieId] ? (
             <button
-              onClick={() => addToWatchlist(movie?.movieId)}
+              onClick={handleAddToWatchlist}
               className="watchlist"
             >
               <FontAwesomeIcon icon={faPlus} /> Watchlist
