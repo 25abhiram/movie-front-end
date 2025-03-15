@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa"; // Import for star icons
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 
-export const MovieDetails = () => {
+export const MovieDetails = ({setShowLogin}) => {
   const params = useParams();
   const [movie, setMovie] = useState([]);
   const [rating, setRating] = useState(0); // State for the star rating
@@ -219,7 +219,7 @@ export const MovieDetails = () => {
 
   return (
     <main className="container">
-      <h5 className="text-danger py-2 border-bottom mb-3">{movie.title}</h5>
+      <h5 className="text-danger mt-3 mb-3 fs-3 border-bottom">{movie.title}</h5>
       <div className="row">
         <div className="col-md-4">
           <img src={image} className="img-fluid img-thumbnail" />
@@ -272,7 +272,15 @@ export const MovieDetails = () => {
             View Trailer
           </a>
 
-          {!watchlistMovies[params.id] ? (
+          {!userDetails?(
+            <button
+            className="btn btn-success ms-3"
+            onClick={() => setShowLogin(true)} // Show login modal
+          >
+            Add to Watchlist
+          </button>
+          ):
+          !watchlistMovies[params.id] ? (
             <button
               onClick={() => addToWatchlist(params.id)}
               className="btn btn-success ms-3"
@@ -292,7 +300,12 @@ export const MovieDetails = () => {
           <div className="mt-4">
             <h5>Rate this Movie:</h5>
 
-            {userReview && !isEditing ? (
+            {!userDetails?(
+              <div className="alert alert-warning">
+              Please <button className="btn btn-link p-0" onClick={() => setShowLogin(true)}>sign in</button> to rate and review this movie.
+            </div>
+            ):
+            userReview && !isEditing ? (
               <div className="bg-light p-3 rounded">
                 <h6>Your Review</h6>
                 <p>

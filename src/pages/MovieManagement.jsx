@@ -46,7 +46,10 @@ export const MovieManagement = () => {
           };
 
       const response = await axios.put(`${url}/${movieId}`, movieToUpdate, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+           Authorization: `Bearer ${token}`,
+           "Content-Type": "application/json",
+        },
       });
 
       fetchMovieList();
@@ -72,6 +75,7 @@ export const MovieManagement = () => {
           <tr>
             <th>Title</th>
             <th>Poster</th>
+            <th>Backdrop</th>
             <th>Release Date</th>
             <th>Actions</th>
           </tr>
@@ -82,6 +86,9 @@ export const MovieManagement = () => {
               <td className="align-middle">{movie.title}</td>
               <td className="text-center align-middle">
                 <img src={movie.poster_path} alt="poster" style={{ width: "50px", height: "50px" }} />
+              </td>
+              <td className="text-center align-middle">
+                <img src={movie.backdrop} alt="backdrop" style={{ width: "50px", height: "50px" }} />
               </td>
               <td className="text-center align-middle">{movie.releaseDate}</td>
               <td className="text-center align-middle">
@@ -131,6 +138,14 @@ export const MovieManagement = () => {
               className="form-control mt-2"
               placeholder="Poster URL"
               defaultValue={editingMovie.poster_path}
+              onChange={handleEditChange}
+            />
+            <input
+              type="text"
+              name="backdrop"
+              className="form-control mt-2"
+              placeholder="Backdrop URL"
+              defaultValue={editingMovie.backdrop}
               onChange={handleEditChange}
             />
             <input

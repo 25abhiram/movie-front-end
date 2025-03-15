@@ -4,13 +4,13 @@ import { Header, Footer, LoginPage } from "./components";
 import AllRoutes from "./routes/AllRoutes";
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <>
       {showLogin ? <LoginPage setShowLogin={setShowLogin} /> : <></>}
       <div>
         <Header setShowLogin={setShowLogin} />
-        <AllRoutes />
+        <AllRoutes setShowLogin={setShowLogin} />
         <Footer />
       </div>
     </>

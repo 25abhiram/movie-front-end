@@ -74,7 +74,7 @@ const {token,setToken,userDetails,setUserDetails}=useContext(StoreContext);
             <NavLink to="/admin" className="btn btn-warning ms-3">Admin</NavLink>
           )} 
 
-          {!token?<button className="btn ms-3 btn-outline-light stretched-link" onClick={()=>setShowLogin(true)}>sign in</button>
+          {!token?<button className="btn ms-3 btn-outline-light" onClick={()=>setShowLogin(true)}>sign in</button>
           :<div className="navbar-profile">
             <i className="navbar-profile bi bi-person-circle fs-3 text-light ms-3"></i>
             <ul className="nav-profile-dropdown">

@@ -9,7 +9,7 @@ import { Hero } from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-export const Home = () => {
+export const Home = ({setShowLogin}) => {
   const { movies, recentMovies, topMovies, loading, error } = useMovies();
   const { recommendedMovies, userDetails, preferences } = useContext(StoreContext);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export const Home = () => {
       // User is not logged in
       return (
         <div className="text-center text-white p-4">
-          <p>To get recommendations, sign in.</p>
+          To get recommendations, <button className="btn btn-link p-0" onClick={() => setShowLogin(true)}>sign in</button>
         </div>
       );
     } else if (preferences.length === 0) {
@@ -68,7 +68,7 @@ export const Home = () => {
 
   return (
     <div className="home">
-      {/* 🎬 HERO SECTION */}
+      {/* HERO SECTION */}
       <div className="hero-container">
         <div className="slider-container">
           <div className="slider" style={{ transform: `translateX(-${index * 100}%)` }}>
@@ -104,7 +104,7 @@ export const Home = () => {
           <span className="top-picks">| Recently Released </span>
         </h2>
         <p className="section-subtitle">Recently Released Movies just for you</p>
-        <MovieCardList movies={recentMovies} />
+        <MovieCardList movies={recentMovies} setShowLogin={setShowLogin} />
       </div>
 
       {/* TOP PICKS SECTION */}
@@ -113,7 +113,7 @@ export const Home = () => {
           <span className="top-picks">| Top Picks </span>
         </h2>
         <p className="section-subtitle">Top Movies just for you</p>
-        <MovieCardList movies={topMovies} />
+        <MovieCardList movies={topMovies} setShowLogin={setShowLogin} />
       </div>
 
       {/* RECOMMENDED MOVIES SECTION */}
